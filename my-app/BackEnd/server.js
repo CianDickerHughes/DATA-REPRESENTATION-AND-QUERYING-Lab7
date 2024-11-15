@@ -3,6 +3,9 @@ const app = express();
 const port = 4000;
 const cors = require('cors');
 app.use(cors());
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://admin:admin@cluster0.g9bhw.mongodb.net/DB14');
+
 // body-parser middleware
 // explain: body-parser is an npm module used to process data sent in an HTTP request body
 const bodyParser = require('body-parser');
