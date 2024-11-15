@@ -29,6 +29,11 @@ app.get('/api/movies', async (req, res) => {
     res.json(movies);
 });
 
+app.get('/api/movie/:id', async (req, res) => {
+    const movie = await Movie.findById(req.params.id);
+    res.send(movie);
+  });
+
 // body-parser middleware
 // explain: body-parser is an npm module used to process data sent in an HTTP request body
 const bodyParser = require('body-parser');
