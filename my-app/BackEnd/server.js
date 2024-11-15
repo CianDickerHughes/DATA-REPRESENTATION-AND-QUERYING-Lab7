@@ -6,6 +6,14 @@ app.use(cors());
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:admin@cluster0.g9bhw.mongodb.net/DB14');
 
+const movieSchema = new mongoose.Schema({
+    title: String,
+    year: String,
+    poster: String
+});
+ 
+const Movie = mongoose.model('Movie', movieSchema);
+
 // body-parser middleware
 // explain: body-parser is an npm module used to process data sent in an HTTP request body
 const bodyParser = require('body-parser');
