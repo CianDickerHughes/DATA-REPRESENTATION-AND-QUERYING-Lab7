@@ -3,6 +3,13 @@ const app = express();
 const port = 4000;
 const cors = require('cors');
 app.use(cors());
+
+// body-parser middleware
+// explain: body-parser is an npm module used to process data sent in an HTTP request body
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:admin@cluster0.g9bhw.mongodb.net/DB14');
 
@@ -14,6 +21,7 @@ const movieSchema = new mongoose.Schema({
  
 const Movie = mongoose.model('Movie', movieSchema);
 
+// post request for movies
 app.post('/api/movies', async (req, res)=>{
 
     const { title, year, poster } = req.body;
@@ -24,21 +32,17 @@ app.post('/api/movies', async (req, res)=>{
     res.status(201).json({ message: 'Movie created successfully', movie: newMovie });
 });
 
+// get json of all movies
 app.get('/api/movies', async (req, res) => {
     const movies = await Movie.find({});
-    res.json(movies);
+    res.status(200).json({movies:movies});
 });
 
+// get json of one movie by id
 app.get('/api/movie/:id', async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     res.send(movie);
-  });
-
-// body-parser middleware
-// explain: body-parser is an npm module used to process data sent in an HTTP request body
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+});
 
 // cors middleware
 // explain: setup allows your frontend app to make API requests to the backend
@@ -54,7 +58,7 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-// json of movies
+/* json of movies
 app.get('/api/movies', (req, res) => {
     const movies = [
             {
@@ -87,7 +91,7 @@ app.get('/api/movies', (req, res) => {
 app.post('/api/movies',(req,res)=>{
     console.log(req.body.title);
     res.send("Movie Added!");
-});
+});*/
 
 // listen request of port
 app.listen(port, () => {
