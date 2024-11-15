@@ -14,6 +14,16 @@ const movieSchema = new mongoose.Schema({
  
 const Movie = mongoose.model('Movie', movieSchema);
 
+app.post('/api/movies', async (req, res)=>{
+
+    const { title, year, poster } = req.body;
+   
+    const newMovie = new Movie({ title, year, poster });
+    await newMovie.save();
+   
+    res.status(201).json({ message: 'Movie created successfully', movie: newMovie });
+});
+
 // body-parser middleware
 // explain: body-parser is an npm module used to process data sent in an HTTP request body
 const bodyParser = require('body-parser');
